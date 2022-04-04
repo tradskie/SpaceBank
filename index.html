@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<head>
+
+    <meta charset="UTF-8" />
+    <title>Space Bank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="img/logo/logo-exchange-200.png" rel="icon">
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Nunito&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="font/iconsmind/style855c.css?t=1620928202652" />
+    <link rel="stylesheet" href="font/simple-line-icons/css/simple-line-icons855c.css?t=1620928202652" />
+    <link rel="stylesheet" href="css/jsonTree855c.css?t=1620928202652" />
+    <link rel="stylesheet" href="css/vendor/select2.min855c.css?t=1620928202652" />
+    <link rel="stylesheet" href="css/vendor/select2-bootstrap.min855c.css?t=1620928202652" />
+    <link rel="stylesheet" href="css/index855c.css?t=1620928202652" />
+    <link rel="stylesheet" href="css/index855c2.css" />
+    <style>
+        .label-btn {
+            display: inline-block;
+            border: 1px solid #424242;
+            width: 28px;
+            height: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        .label-btn:hover {
+            color: #969696;
+        }
+
+        .row-main-form {
+            margin-top: 55px;
+        }
+
+        .form-control[readonly] {
+            border: 1px solid #424242;
+            background: #232223;
+            cursor: not-allowed;
+        }
+
+        .numbers-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .number-wrap {
+            width: 160px;
+            height: 160px;
+            border: 1px solid #424242;
+            border-radius: 0.1rem;
+            margin-left: 5px;
+        }
+
+        .number-wrap:first-child {
+            margin-left: 0;
+        }
+
+        .luck-title {
+            font-family: 'Lobster', cursive;
+            font-size: 8rem !important;
+            color: #f7941d;
+            position: relative;
+            bottom: 50px;
+
+        }
+
+        .jackpot-title {
+            font-family: 'Raleway Dots', cursive;
+            font-size: 4rem !important;
+            line-height: normal;
+            color: white;
+
+        }
+
+        .number-wrap .digit {
+            font-size: 80px;
+            line-height: normal;
+            font-weight: 700;
+        }
+
+        .number-wrap .digit-title {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        .noUi-tooltip,
+        .noUi-handle {
+            cursor: pointer;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            /* display: none; <- Crashes Chrome on hover */
+            -webkit-appearance: none;
+            margin: 0;
+            /* <-- Apparently some margin are still there even though it's hidden */
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+            /* Firefox */
+        }
+
+        #rollBtn {
+            font-size: 1.4rem;
+            line-height: 1.0;
+        }
+
+        .rolling-text {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                color: #ffffff;
+            }
+
+            100% {
+                color: #86367e;
+            }
+        }
+
+        #org-viewer ul {
+            border: 0;
+            outline: 0;
+            vertical-align: baseline;
+            background: transparent;
+            list-style-type: none;
+            padding-inline-start: 15px;
+            /*margin:0;
+            padding:0;
+            overflow-x: auto;
+            overflow-y: auto;*/
+        }
+
+        #org-viewer ol {
+            list-style-type: none;
+        }
+
+        #org-viewer-drop ul {
+            border: 0;
+            outline: 0;
+            vertical-align: baseline;
+            background: transparent;
+            list-style-type: none;
+            padding-inline-start: 15px;
+            /*margin:0;
+            padding:0;
+            overflow-x: auto;
+            overflow-y: auto;*/
+        }
+
+        #org-viewer-drop ol {
+            list-style-type: none;
+        }
+
+        
+
+        #topStatsContainer i {
+            background: -webkit-gradient(linear, left top, left bottom, from(#fef5fe), to(#f7941d));
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        #topStatsContainer i.large-icon {
+            font-size: 40px;
+            line-height: 35px;
+        }
+
+        #topStatsContainer .price-top-part>.text-large {
+            font-size: 22px !important;
+        }
+
+        #jackpotContainer .price-top-part>.text-large {
+            font-size: 22px !important;
+        }
+
+        #roundContainer .price-top-part>.text-large {
+            font-size: 22px !important;
+        }
+
+        #current-tickets-wrap {
+            min-width: 114px;
+        }
+          /* Style The Dropdown Button */
+  .dropbtn {
+    background-color: transparent;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #00000033;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: rgb(255, 255, 255);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #212429}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {
+    background-color: transparent;
+  }
+    </style>
+</head>
+
+ <!-- ======= Header ======= -->
+ <header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center justify-content-lg-between">
+
+      <h1 class="logo me-auto me-lg-0" style="font-family: 'Lobster', cursive; font-size: 25px;"><a href="index.html"><img style="height: 100%; width: 40px; padding-right: 5px;" src="./img/Space-logo-Orange.svg" alt="">Space Bank</a></img></h1>
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>	
+	        <li> 
+            <a class="nav-link" href="" target="_blank"><img class="nav-logo" id="logo" alt="" src="./img/Space-logo-Orange.svg"></img>Buy $SPACE</a>
+          </li>	
+          <div class="dropdown">
+            <button class="dropbtn"><img class="nav-logo" id="logo" alt="" src="">Projects</button>
+            <div class="dropdown-content">
+              <a href="https://lottery.spaceprojects.online/"><img class="nav-logo" id="logo" alt="" src="./img/SpaceField.png">Space Lottery</a>
+              <a href="https://spacefield.spaceprojects.online/?ref=0x7ec5c8753ed76a517a5c48de14f489f334b33ed2"><img class="nav-logo" id="logo" alt="" src="./img/SpaceField.png">Space Field</a>
+              <a href="https://spaceport.spaceprojects.online/?ref=0x2f0ead34aBDD8375382AD56B8da4b14d94AD9B66"><img class="nav-logo" id="logo" alt="" src="./img/SpaceField.png">Space Port</a>
+              <a href="https://spaceminer.spaceprojects.online?ref=0x7ec5c8753ed76a517a5c48de14f489f334b33ed2"><img class="nav-logo" id="logo" alt="" src="./img/Space-logo-Orange.svg">Space Miner</a>
+              <a href="https://dao.spaceprojects.online/dashboard"><img class="nav-logo" id="logo" alt="" src="./img/Space-logo-Orange.svg">Space Dao</a>
+            </div>
+           </div>
+          <li>
+	           <a class="nav-link" href="" target="_blank"><img class="nav-logo" id="logo" alt="" src="./img/bscscan-logo-light-circle.svg"></img>Contract</a>
+          </li>
+	        <li>
+            <a class="nav-link" href="https://twitter.com/spacemoney9" target="_blank"><img class="nav-logo" id="twitter" alt="" src="./img/twitter.svg"></img>Twitter</a>
+          </li> 
+           <li>
+            <a class="nav-link" href="https://t.me/SpaceDaoDapp" target="_blank"><img class="nav-logo" id="telegram" alt="" src="./img/telegram.svg"></img>Telegram</a>
+          </li>
+          <li>
+            <a class="nav-link" >
+              <button id="enableMetamask" class="btn connect-btn">Connect</button>
+            </a>
+          </li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+    </div>
+  </header><!-- End Header -->
+
+<body class="show-spinner">
+    <div class="landing-page">
+        <div class="mobile-menu">
+            <ul id="site-menu" class="navbar-nav">
+            </ul>
+        </div>
+        <div class="main-container">
+            <div class="content-container" id="home">
+                <div class="section home">
+                    <div class="container">
+                        <div class="row home-row mb-2">
+                            <div class="modal fade" id="bscWebModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Metamask Not Detected</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>Binance Smart Chain is required for access to Space Bank</h3>
+                                            <p>If you have Metamask installed make sure you are logged in and have a
+                                                wallet
+                                                selected</p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="invalidAmountModal" tabindex="-1" role="dialog"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Whoops!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>Enter Amount in Space</h3>
+                                            <p>Please enter a valid amount, the minimum is 1 Space. Thanks! </p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="invalidAddressModal" tabindex="-1" role="dialog"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Whoops!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>Enter a valid BSC Address</h3>
+                                            <p>Please check that BSC address again. Also can't be your own. Thanks! </p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="invalidRefAddressModal" tabindex="-1" role="dialog"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Whoops!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>Invalid BSC Address Detected in Referral Link</h3>
+                                            <p>Please check that BSC address again. Thanks! </p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="txModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Transaction Complete</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>You can track your transaction below</h3>
+                                            <p>Check on Bscscan: <span class="notranslate" id="txId"></span></p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="modal fade" id="txErrorModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Whoops!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>BscLink Reported a Problem</h3>
+                                            <p id="txErrorId"></p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Houston, we have a problem!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>Check your gauges</h3>
+                                            <p id="errorId"></p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Hey There!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3 id="alertTitle">Check your gauges</h3>
+                                            <p id="alertId"></p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FARM DIALOGS-->
+                            <div class="modal fade" id="showFarm" tabindex="-1" role="dialog" aria-hidden="true">
+                                <!--Added dynamically-->
+                            </div>
+                            <div class="modal fade" id="depositFarm" tabindex="-1" role="dialog" aria-hidden="true">
+                                <!--Added dynamically-->
+                            </div>
+                            <div class="modal fade" id="unfreezeFarm" tabindex="-1" role="dialog" aria-hidden="true">
+                                <!--Added dynamically-->
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-4 mt-2">
+                            <div class="container col-12 col-xl-6 col-lg-6 col-md-6 mb-4 pt-4">
+                                <div class="home-text text-center row mb-4 mt-4">
+                                    <div class="col-12 text-center">
+                                        <span class="luck-title  pb-4 mb-4 mr-2 text-center notranslate">Space Bank</span>
+                                    </div>
+                                </div>
+                                <!--<h3 class="text-center text-white-50 mb-4">Daily Return <span class="notranslate" id="daily-return"></span>
+                            </h3>-->
+                                <div id="topStatsContainer" class="row">
+
+                                    <div class="container col-6 col-xl-4 col-lg-4 col-md-4  text-center">
+                                        <div class="price-top-part">
+                                            <i class="iconsmind-Coins large-icon"></i>
+                                            <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Available</h5>
+                                            <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                    id="user-divs">...</span>
+                                            </p>
+                                            <p class="text-muted text-small">Space <span id="user-divs-usdt"></span></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="container col-6 col-xl-4 col-lg-4 col-md-4  text-center">
+                                        <div class="price-top-part">
+                                            <i class="iconsmind-Astronaut  large-icon"></i>
+                                            <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Deposits</h5>
+                                            <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                    id="user-balance">...</span></p>
+                                            <p class="text-muted text-small">Space <span id="user-balance-usdt"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="container col-6 col-xl-4 col-lg-4 col-md-4  text-center">
+                                        <div class="price-top-part">
+                                            <i class="iconsmind-Mine large-icon"></i>
+                                            <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Claimed</h5>
+                                            <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                    id="user-claimed">...</span></p>
+                                            <p class="text-muted text-small">Space</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="container col-6 col-xl-4 col-lg-4 col-md-4  text-center">
+                                        <div class="price-top-part">
+                                            <i class="iconsmind-Handshake large-icon"></i>
+                                            <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Rewarded</h5>
+                                            <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                    id="user-direct">...</span><!-- / <span class="notranslate"
+                                                    id="user-match">...</span>--></p>
+                                            <p class="text-muted text-small">Space (applied to deposits)</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="container col-6 col-xl-4 col-lg-4 col-md-4  text-center">
+                                        <div class="price-top-part">
+                                            <i class="iconsmind-Battery-75 large-icon"></i>
+                                            <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Max Payout</h5>
+                                            <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                    id="user-max">...</span></p>
+                                            <p class="text-muted text-small">Space</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="container col-6 col-xl-4 col-lg-4 col-md-4  text-center">
+                                        <div class="price-top-part">
+                                            <i class="iconsmind-MaleFemale large-icon"></i>
+                                            <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Team</h5>
+                                            <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                    id="user-referrals">...</span> / <span class="notranslate"
+                                                    id="user-structure">...</span></p>
+                                            <p class="text-muted text-small">Players (Direct / Total)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="col-12 white mb-3 text-justify">
+                                    Space Bank is a high yield / open ended, certificate of deposit. Passively
+                                    earn Space from regular deposits and team based referrals.
+                                </p>
+
+
+                            </div>
+
+                            <div class="container col-12 col-xl-6 col-lg-6 col-md-6 mb-4">
+                                <div class="row mb-2">
+                                <div class="text-left col">
+                                Price &nbsp;&nbsp;<span class="text-white" id="bnkrx-price">...</span> &nbsp;BUSD/Space
+                                </div> 
+                                <div class="text-right col">
+                                    <a target="_blank" href="https://youtu.be/wpmfDvNzZ58" class="mr-4">Tutorial</a>
+                             <!--       <a target="_blank" href="swapx.html" class="">Get Space</a> -->
+                                </div>
+                            </div>
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h3><span class="notranslate" id="time-left">Deposit</span></h3>
+                                        <form>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-6 text-left">
+                                                        <label for="stakeAmount">Amount</label>
+                                                    </div>
+                                                    <div class="col-6 text-right">
+                                                        Available <label class="user-balance text-white">0.0</label>
+                                                    </div>
+                                                </div>
+                                                <input type="number" class="form-control" id="stakeAmount"
+                                                    aria-describedby="buyBscHelp" placeholder="Space">
+                                                <small class="form-text text-muted">A minimum of 1 Space for
+                                                    deposits *</small>
+                                            </div>
+                                            <div class="row justify-content-end">
+                                                <div class="col-8 text-left">
+                                                    <a class="btn btn-outline-semi-light default mb-0 mr-2"
+                                                        onclick="deposit();">DEPOSIT</a>
+
+                                                </div>
+                                                <div class="col-4 text-right">
+                                                    <label>
+                                                        <div class="custom-switch custom-switch-primary-inverse">
+                                                            <input class="custom-switch-input" id="stakingChb"
+                                                                type="checkbox" />
+                                                            <label class="custom-switch-btn align-middle mt-0"
+                                                                for="stakingChb"></label>
+                                                            <small
+                                                                class="form-text d-inline-block align-middle text-muted p-0 m-0 ml-2">
+                                                                <span id="staking-status">Loading...</span>
+                                                            </small>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 mt-3">
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <p class="col-12 white mb-3">
+                                    <a class="btn btn-outline-semi-light btn-block default mb-0 mr-4"
+                                        onclick="roll();">COMPOUND</a>
+                                    <a class="btn btn-outline-semi-light btn-block default mb-0 mr-4"
+                                        onclick="claim();">WITHDRAWN</a>
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-4 mt-4">
+                            <div class="col-12 col-xl-6 col-lg-6 col-md-6 text-left">
+                                <p class="white">Network: <span class="notranslate" id="network">Detecting...</span>
+
+                                </p>
+                            </div>
+                            <div class="col-12 col-xl-6 col-lg-6 text-xl-right text-lg-right text-md-right">
+                                <p class="white">Wallet: <span class="notranslate"
+                                        id="walletAddress">Loading...</span>&nbsp;&nbsp;&nbsp;
+                                    Balance: <span class="notranslate" id="walletBalanceValue">...</span> <span
+                                        class="text-muted">BSC</span> <span class="notranslate"
+                                        id="walletBalanceValue-bnkrx">...</span> <span class="text-muted">Space</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4 mt-2">
+
+                            <div class="container col-12 col-xl-6 col-lg-6 col-md-6 mb-4">
+                                <h2 class="text-white-50">Get a Buddy</h2>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3>Buddy System</h3>
+
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="recipient">Current Buddy</label>
+                                                <h4 id="current-buddy" class="text-white-50">...</h3>
+
+                                                <label>Manager</label>
+                                                <h4 id="current-manager" class="text-white-50">...</h3>
+
+                                                <label>Beneficiary</label>
+                                                <h4 id="current-beneficiary" class="text-white-50">...</h3>
+
+
+                                                <label>Last Checkin</label>
+                                                <h4 id="current-checkin" class="text-white-50">...</h3>
+
+                                                <label>Inactivity Threshold</label>
+                                                <h4 id="current-inactivity" class="text-white-50">...</h3>
+
+                                            </div>
+                                            <div id="buddy-input">
+                                                <div class="form-group">
+                                                    <label for="recipient">Buddy</label>
+                                                    <input class="form-control" id="recipient"
+                                                        aria-describedby="transBscHelp" placeholder="Address">
+
+                                                </div>
+                                                <p class="text-left">
+                                                    <a class="btn btn-outline-semi-light default mb-0" id="updateBuddy"
+                                                        onclick="updateBuddy();">UPDATE</a><br><br>
+                                                    <a id="updateSupport"
+                                                        href="javascript:supportMarketingingDev();">Support marketing
+                                                        and development</a>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <a id="buddy-ref" href="javascript:useBuddyRef();">Buddy
+                                                        Detected</a>
+                                                </p>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container col-12 col-xl-6 col-lg-6 col-md-6 mb-4">
+                                <h2 class="text-white-50">Space Riders</h2>
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3>Player Lookup</h3>
+                                        <form>
+                                            <div id="buddy-input">
+                                                <div class="form-group">
+                                                    <label for="recipient">Player</label>
+                                                    <input class="form-control" id="player-lookup"
+                                                        aria-describedby="transBscHelp" placeholder="Address">
+
+                                                </div>
+                                                <p class="text-left">
+                                                    <a class="btn btn-outline-semi-light default mb-0"
+                                                        onclick="playerLookup();">GO</a>
+
+                                                </p>
+                                                <h4 class="color-theme-1 mt-2 pt-2">Player Info</h4>
+                                                <div class="row">
+                                                    <label class="col-6">Directs</label>
+                                                    <span id="player-directs" class="col-6 text-white">...</span>
+
+                                                    <label class="col-6">Team</label>
+                                                    <span id="player-team" class="col-6 text-white">...</span>
+
+                                                    <label class="col-6">Net Deposits</label>
+                                                    <span id="player-deposits" class="col-6 text-white">...</span>
+
+                                                    <label class="col-6">Airdrop Sent / Received</label>
+                                                    <span id="player-airdrop" class="col-6 text-white">...</span>
+
+                                                    <label class="col-6">Airdrop Last Sent</label>
+                                                    <span id="player-airdrop-time" class="col-6 text-white">...</span>
+
+
+                                                </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container-fluid mb-4 mt-4">
+                            <h2 class="text-white-50">Space Teams</h2>
+                            <div class="card ">
+                                <div class="card-header">
+                                    <ul class="nav nav-tabs card-header-tabs " role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="first-tab" data-toggle="tab"
+                                                href="#teamViewer" role="tab" aria-controls="teamViewer"
+                                                aria-selected="true">Team Viewer</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="second-tab" data-toggle="tab" href="#airdropUI"
+                                                role="tab" aria-controls="airdropUI" aria-selected="true">Team
+                                                Airdrop</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="third-tab" data-toggle="tab" href="#airdropActivity"
+                                                role="tab" aria-controls="airdropActivity" aria-selected="true">Latest
+                                                Airdrops</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="fourth-tab" data-toggle="tab" href="#airdropSearch"
+                                                role="tab" aria-controls="airdropSearch" aria-selected="true">Search
+                                                Airdrops</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="transfer-tab" data-toggle="tab" href="#transferUI"
+                                                role="tab" aria-controls="transferUI" aria-selected="true">Transfers</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="teamViewer" role="tabpanel"
+                                            aria-labelledby="first-tab">
+                                            <form>
+                                                <div>
+                                                    <div class="form-group">
+                                                        <label for="recipient">Player</label>
+                                                        <input class="form-control" id="org-leader"
+                                                            aria-describedby="transBscHelp" placeholder="Address">
+                                                            <div class="text-right mt-2">
+                                                                <a href="javascript:myTeamView();">Use my address</a>&nbsp;&nbsp;&nbsp;
+                                                                <a id="updateSupport"
+                                                            href="javascript:useCustodyAddressOrg();">View All</a>
+                                                                </div>
+                                                    </div>
+                                                    <p class="text-left">
+                                                        <a class="btn btn-outline-semi-light default mb-0"
+                                                            id="updateBuddy"
+                                                            onclick="showOrg();">SHOW</a>&nbsp;&nbsp;&nbsp;
+                                                            <a class="btn btn-outline-semi-light default mb-0"
+                                                            id="updateBuddy"
+                                                            onclick="suggestBuddy();">FIND BUDDY</a>    
+                                                    </p>
+                                                    <p class="text-left">
+                                                    * The Find Buddy tool will suggest the next address to use as a buddy when building an optimized 15+ wide by 3 down "BOX" org under the address provided.  
+                                                    If every player uses this tool to build their "direct" team the result is a dense unbreakable lattice that Space rewards without broken pathways.   
+                                                    </p>
+                                                    <h4 id="suggested-buddy"></h4>
+                                                    <div class="org-viewer-buddy" class="overflow-auto"></div>
+                                                    <div id="org-viewer" class="mt-4 overflow-auto"></div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane fade" id="airdropUI" role="tabpanel"
+                                            aria-labelledby="second-tab">
+                                            <form>
+                                                <div>
+                                                    <div class="form-group">
+                                                        <label for="recipient">Player</label>
+                                                        <input class="form-control" id="org-leader-drop"
+                                                            aria-describedby="transBscHelp" placeholder="Address">
+                                                            <div class="text-right mt-2">
+                                                            <a href="javascript:myAirdrop();">Use my address</a>
+                                                            </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row mt-2 mb-4">
+                                                            <div class="col-12 mb-4 pb-2">
+                                                            
+                                                                <label for="max-recipients">Campaign</label>
+                                                                <select class="form-control select2-single" id="max-recipients">
+                                                                <option value="0">Divide budget between all matching players</option>
+                                                                <option value="1">Rewards budget to one matching player *</option>
+                                                                <option value="5">Divided budget across 5 matching players *</option>
+                                                                <option value="20">Divided budget across 20 matching players *</option>
+                                                                <option value="50">Divided budget across 50 matching players *</option>
+                                                                <option value="100">Divided budget across 100 matching players *</option>
+                                                                </select>
+                                                                
+                                                                <small class="form-text text-muted">* Eligible matching 
+                                                                    players selected at random</small>
+
+                                                            </div>
+                                                            <div class="col-12 col-xl-3 col-lg-3 col-md-3 mb-2">
+                                                                <label>Minimum directs</label><br>
+                                                                    <select class="form-control select2-single" id="min-directs">
+                                                                    <option value="1">1</option>
+                                                                    <option value="5">5</option>
+                                                                    <option value="15">15</option>
+                                                                    <option value="0">None</option>    
+                                                                    </select>
+                                                            </div>
+                                                            <div class="col-12 col-xl-3 col-lg-3 col-md-3 mb-2">
+                                                                <label>Team depth</label><br>
+                                                                    <select class="form-control select2-single" id="min-depth">
+                                                                    <option value="1">1</option>
+                                                                    <option value="5">5</option>
+                                                                    <option value="10">10</option>
+                                                                    <option value="15">15</option>
+                                                                    </select>
+                                                            </div>
+                                                            <div class="col-12 col-xl-3 col-lg-3 col-md-3 mb-2">
+                                                                <label for="min-deposits">Minimum net deposits</label><br>
+                                                                    <select class="form-control select2-single" id="min-deposits">
+                                                                    <option value="50">50+ Space</option>
+                                                                    <option value="100">100+ Space</option>
+                                                                    <option value="500">500+ Space</option>
+                                                                    <option value="1000">1K+ Space</option>
+                                                                    </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-6 text-left">
+                                                                <label for="dropAmount">Budget</label><br>
+                                                                <input type="number" class="form-control"
+                                                                    id="dropAmount" aria-describedby="buyBscHelp"
+                                                                    placeholder="SPACE">
+                                                            </div>
+
+
+                                                            <div class="col-6 text-right">
+                                                                Available <label
+                                                                    class="user-balance text-white">0.0</label><br>
+                                                                <h2 id="estimateAmount">Airdrop Estimate</h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-2 mb-4">
+                                                <div class="col-6 text-left">
+                                                    <a class="btn btn-outline-semi-light default mb-2"
+                                                        onclick="showAirdrop();">RUN</a>&nbsp;&nbsp;&nbsp;
+                                                    <a class="btn btn-outline-semi-light default mb-2"
+                                                        onclick="sendAirdrop();">SEND</a>
+                                                </div>
+                                                <div class="col-6 text-right">
+                                                    <label>
+                                                        <div class="custom-switch custom-switch-primary-inverse">
+                                                            <input class="custom-switch-input" id="airdropChb"
+                                                                type="checkbox" />
+                                                            <label class="custom-switch-btn align-middle mt-0"
+                                                                for="airdropChb"></label>
+                                                            <small
+                                                                class="form-text d-inline-block align-middle text-muted p-0 m-0 ml-2">
+                                                                <span id="airdrop-status">Loading...</span>
+                                                            </small>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                                <div class="row">
+                                                    <div class="col-12 col-xl-6 col-lg-6 col-md-6">
+                                                        <h3>Campaign Viewer</h3>   
+                                                        <div class="org-viewer-monitor" id="org-viewer-drop" class="mt-4 overflow-auto"></div>
+                                                    </div>
+                                                    <div class="col-12 col-xl-6 col-lg-6 col-md-6">
+                                                        <div class="row">
+                                                        <div class="col">    
+                                                        <h3>Campaign Log</h3>
+                                                        </div>
+                                                        <div class="col text-right" id="send-console">
+                                                        </div>
+                                                        </div>   
+                                                        <textarea class="form-control" id="campaign-log" rows="20" readonly></textarea>
+                                                        <p class="text-left pt-2">
+                                                            <a class="btn btn-outline-semi-light default mb-0"
+                                                                onclick="copyLog();">COPY</a>
+                                                        </p>
+                                                    </div>
+
+                                                </div>
+                                            </form> 
+                                        </div>
+                                        <div class="tab-pane fade" id="airdropActivity" role="tabpanel"
+                                             aria-labelledby="third-tab">
+                                             <div class="text-right mb-4">
+                                                <a class="btn btn-outline-semi-light default" onclick="loadTabsData();">REFRESH</a>
+                                                </div>
+                                             <div id="airdropActivity-ui"></div>
+                                        </div>
+                                        <div class="tab-pane fade" id="airdropSearch" role="tabpanel"
+                                             aria-labelledby="fourth-tab">
+                                             <form>
+                                                <div>
+                                                    <div class="form-group">
+                                                        <label for="recipient">Player</label>
+                                                        <input class="form-control" id="airdrop-search-address"
+                                                            aria-describedby="transBscHelp" placeholder="Address">
+                                                            <div class="text-right mt-2">
+                                                            <a href="javascript:myAirdropSearch();">Use my address</a>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col text-left">
+                                                        <div id="search-address-option" class="btn-group btn-group-toggle mr-4" data-toggle="buttons">
+                                                            <label class="btn btn-outline-primary active">
+                                                                <input type="radio" name="options"  value="to" checked> To
+                                                            </label>
+                                                            <label class="btn btn-outline-primary">
+                                                                <input type="radio" name="options" value="from"> From
+                                                            </label>
+                                                        </div>
+                                                        <a class="btn btn-outline-semi-light default mb-0"
+                                                            onclick="searchAirdrop();">GO</a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <div id="search-results"></div>
+                                        </div>
+                                        <div class="tab-pane fade" id="managementUI" role="tabpanel"aria-labelledby="fifth-tab">
+                                             <div class="mb-4">
+                                             
+                                                <h3><span class="notranslate" id="time-left">Manage Player</span></h3>
+                                                <form>
+                                                    <div class="form-group">
+                                                        <div class="form-group">
+                                                            <label for="managedPlayer">Player</label>
+                                                            <input class="form-control" id="managedPlayer"
+                                                                aria-describedby="transBscHelp" placeholder="Address">
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6 text-left">
+                                                                <label for="managedStakeAmount">Amount</label>
+                                                            </div>
+                                                            <div class="col-6 text-right">
+                                                                Available <label class="user-balance text-white">0.0</label>
+                                                            </div>
+                                                        </div>
+                                                        <input type="number" class="form-control" id="managedStakeAmount"
+                                                            aria-describedby="buyBscHelp" placeholder="SPACE">
+                                                        <small class="form-text text-muted">A minimum of 1 Space for
+                                                            deposits *</small>
+                                                    </div>
+                                                    <div class="row justify-content-end">
+                                                        <div class="col-8 text-left">
+                                                            <a class="btn btn-outline-semi-light default mb-0 mr-2"
+                                                                onclick="depositFor();">DEPOSIT</a><span id="managed-deposits"></span>
+
+                                                        </div>
+                                                        <div class="col-4 text-right">
+                                                            <span id="available-managed-divs" class="mr-2"></span>
+                                                            <a class="btn btn-outline-semi-light default mb-0 mr-2"
+                                                                onclick="rollFor();">ROLL</a>
+                                                            <a class="btn btn-outline-semi-light default mb-0 mr-2"
+                                                                onclick="claimFor();">CLAIM</a>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="mb-4">
+                                                <h3><span class="notranslate" id="time-left">Beneficiary Actions</span></h3>
+                                                    <form>
+                                                        
+                                                        <div class="form-group">
+                                                            <label for="manager">Primary (optional)</label>
+                                                            <input class="form-control" id="primary"
+                                                                aria-describedby="transBscHelp" placeholder="Address">
+                                                            <small class="form-text text-muted">
+                                                            <span class="notranslate" id="primary-rewards"></span>
+                                                            <span class="notranslate" id="primary-deposits"></span>
+                                                            <span class="notranslate" id="primary-claims"></span><br>
+                                                            <span class="notranslate" id="primary-manager"></span>
+                                                            <span class="notranslate" id="primary-heartbeat"></span><br>
+                                                            <span class="notranslate" id="primary-beneficiary"></span>
+                                                            <span class="notranslate" id="primary-checkin"></span>
+                                                </small>
+                                                        </div>
+                                                        
+                                                        <div class="row justify-content-end">
+                                                            <div class="col-8 text-left">
+                                                            <a class="btn btn-outline-semi-light default mb-0 mr-2"
+                                                                    onclick="transferInactive();">TRANSFER</a>
+
+                                                            </div>
+                                                            <div class="col-4 text-right">
+                                                                <span id="saved-manager" class="mb-0 mr-2"></span>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            <div>
+                                            <!--<h3><span class="notranslate" id="time-left">Bulk Manager - Coming Soon</span></h3>-->
+                                            </div>
+                                        </div>
+
+
+                                        <div class="tab-pane fade" id="migrateUI" role="tabpanel"
+                                             aria-labelledby="transfer-tab">
+                                             <div class="mb-4">
+                                                <h3><span class="notranslate" id="time-left">Migrate Balance v1 -> v1.2</span></h3>
+                                                    <form>
+                                                        
+                                                        <div class="form-group">
+                                                            <label for="flow-src-v1">Space Destination</label>
+                                                            <input class="form-control" id="flow-src-v1"
+                                                                aria-describedby="transBscHelp" placeholder="Address">
+                                                                <div class="text-right mt-2">
+                                                            <a href="javascript:myMigrate();">Use my address</a>
+                                                            </div>
+
+                                                        </div>
+                                                        
+                                            
+                                                        <div class="form-group">
+                                                                <a class="btn btn-outline-semi-light default mb-0 mr-2"
+                                                                    onclick="migrate();">MIGRATE</a>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+
+                                        <div class="tab-pane fade" id="transferUI" role="tabpanel"
+                                             aria-labelledby="transfer-tab">
+                                                <div class="mb-4">
+                                                <h3><span class="notranslate" id="time-left">Direct Airdrop</span></h3>
+                                                <form>
+                                                    <div class="form-group">
+                                                        <div class="form-group">
+                                                            <label for="managedPlayer">Player</label>
+                                                            <input class="form-control" id="airdropPlayer"
+                                                                aria-describedby="transBscHelp" placeholder="Address">
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6 text-left">
+                                                                <label for="airdropStakeAmount">Amount</label>
+                                                            </div>
+                                                            <div class="col-6 text-right">
+                                                                Available <label class="user-balance text-white">0.0</label>
+                                                            </div>
+                                                        </div>
+                                                        <input type="number" class="form-control" id="airdropStakeAmount"
+                                                            aria-describedby="buyBscHelp" placeholder="SPACE">
+                                                        <small class="form-text text-muted">A minimum of 1 Space for
+                                                            deposits *</small>
+                                                    </div>
+                                                    <div class="row justify-content-end">
+                                                        <div class="col-12 text-left">
+                                                            <a class="btn btn-outline-semi-light default mb-0 mr-2"
+                                                                onclick="directAirdrop();">SEND</a>
+
+                                                        </div>
+                                                       
+                                                    </div>
+                                                </form>
+                                                </div>
+                                                <div class="mt-4 mb-4">
+                                                <h3>Transfer Balances</h3>
+                                                    <form>
+                                                        
+                                                        <div class="form-group">
+                                                            <label for="transfer-dest">Destination</label>
+                                                            <input class="form-control" id="transfer-dest"
+                                                                aria-describedby="transBscHelp" placeholder="Address">
+
+                                                        </div>
+                                                        
+                                                        <div class="row justify-content-end">
+                                                            <div class="col-8 text-left">
+                                                                <a class="btn btn-outline-semi-light default mb-0 mr-2"
+                                                                    onclick="transfer();">TRANSFER</a>
+                                                            
+
+                                                            </div>
+                                                            <div class="col-4 text-right">
+                                                                <span id="saved-manager" class="mb-0 mr-2"></span>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            
+                                            </div>
+                                        
+                                        <div class="tab-pane fade" id="settingsUI" role="tabpanel"
+                                             aria-labelledby="sixth-tab">
+                                             <div class="mb-4">
+                                                <h3><span class="notranslate" id="time-left">Inactive Account Management</span></h3>
+                                                    <form>
+                                                        
+                                                        <div class="form-group">
+                                                            <label for="beneficiary">Beneficiary (optional)</label>
+                                                            <input class="form-control" id="beneficiary"
+                                                                aria-describedby="transBscHelp" placeholder="Address">
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="stakeAmount">Inactivity Threshold</label>
+                                                            <select class="form-control select2-single" id="heartbeat-interval">
+                                                                <option value="90">3 months</option>
+                                                                <option value="120">4 months</option>
+                                                                <option value="180">6 months</option>
+                                                                <option value="240">8 months</option>
+                                                                <option value="365">1 year</option>
+                                                                <option value="545">1.5 years</option>
+                                                                <option value="730">2 years</option>
+                                                            </select>
+  
+                                                        </div>
+                                            
+                                                        <div class="row justify-content-end">
+                                                            <div class="col-8 text-left">
+                                                                <a class="btn btn-outline-semi-light default mb-0 mr-2"
+                                                                    onclick="saveBeneficiary();">SAVE</a>
+                                                                <a class="btn btn-outline-semi-light default mb-0 mr-2"
+                                                                    onclick="clearBeneficiary();">CLEAR</a>
+
+                                                            </div>
+                                                            <div class="col-4 text-right">
+                                                                <span id="saved-beneficiary" class="mb-0 mr-2"></span>
+                                                                <span id="saved-duration" class="mb-0 mr-2"></span>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="mb-4">
+                                                <h3><span class="notranslate" id="time-left">Account Manager</span></h3>
+                                                    <form>                        
+                                                        <div class="form-group">
+                                                            <label for="manager">Manager (optional)</label>
+                                                            <input class="form-control" id="manager"
+                                                                aria-describedby="transBscHelp" placeholder="Address">
+                                                        </div>
+                                                        <div class="row justify-content-end">
+                                                            <div class="col-8 text-left">
+                                                                <a class="btn btn-outline-semi-light default mb-0 mr-2"
+                                                                    onclick="saveManager();">SAVE</a>
+                                                            <a class="btn btn-outline-semi-light default mb-0 mr-2"
+                                                                    onclick="clearManager();">CLEAR</a>
+                                                            </div>
+                                                            <div class="col-4 text-right">
+                                                                <span id="saved-manager" class="mb-0 mr-2"></span>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4 mt-2">
+                        <div class="container col-12">
+                            <h2 class="text-white-50">About</h2>
+                            <p class="text-white">Space Bank provides 1% returns per day on player deposits with passive
+                                play.
+                                Space will never drain and operates very similar to farms, minting Space rewards for
+                                participation over time.
+                                By getting direct referrals and building teams players can accelerate how fast they
+                                ROI on initial deposits.
+                                Every direct referral by a player provides 10% income on deposits and claims. An individual
+                                player can have an unlimited amount of direct referrals and after 5 directs turns into a team wallet.
+                                Team wallets offer 2.5% cash back on claims.  Each direct referal becomes the head of a team chain, so a player can have an
+                                unlimited amount of team chains. This is true for EVERY player, a player has one and
+                                only one buddy/upline and many teams/downlines.
+                                Each team chain earns additional rewards as withdrawals are made from up to 15
+                                players in the team/downline. A downline is a team of players linked by
+                                buddies/uplines.
+                                Each direct referral you have is the head of a downline in your team, so focus on
+                                organic referrals.<br>
+                                In addition every roll and claim generates a 5% Space distribution to the Reactor which supplies liquidity to Space. Spread the word and lets grow
+                                SPACE!<br>
+                                * A minimum initial deposit of 10 Space is required to get started.</p>
+                            <p class="white">Walkthrough - <a class="notranslate" target="_blank"
+                                href="" class="mr-4"></a>
+                            </p>
+                            <p class="white">Contract<br><a id="contract-url" class="notranslate" target="_blank"
+                                href="#"></a></p>
+                            <p class="white">Audits - <a target="_blank"
+                                href=""></a>
+                            </p>
+                            <p class="white">Stats - <a target="_blank"
+                                href=""></a>
+                            </p>
+                            <p id="referral"></p>
+                        </div>
+                    </div>
+
+                    <div class="row pt-4 mt-4">
+                        <div class="container col-12 text-center">
+                            <h1 class="text-white-50">Stats</h1>
+                            <p>
+                                Space Bank provides reliable income for passive solo and active team players
+                                alike! Here are the
+                                numbers...
+                            </p>
+                        </div>
+                        <div class="container col-12 col-xl-4 col-lg-4 col-md-4 text-center">
+                            <div class="price-top-part">
+                                <i class="iconsmind-MaleFemale large-icon"></i>
+                                <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">Players</h5>
+                                <p class="text-large mb-2 text-white"><span class="notranslate"
+                                    id="getTotalMembers">...</span></p>
+                                <p class="text-muted text-small">Players</p>
+                            </div>
+                        </div>
+                        <div class="container col-12 col-xl-4 col-lg-4 col-md-4 text-center">
+                            <div class="price-top-part">
+                                <i class="iconsmind-Bank large-icon"></i>
+                                <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">Total Value Locked</h5>
+                                <p class="text-large mb-2 text-white"><span class="notranslate"
+                                    id="contractBalance">...</span></p>
+                                <p class="text-muted text-small">Space <span id="contractBalance-usdt"></span></p>
+                            </div>
+                        </div>
+                        <div class="container col-xl-4 col-lg-4 col-md-4 text-center">
+                            <div class="price-top-part">
+                                <i class="iconsmind-Sync large-icon"></i>
+                                <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">Transactions</h5>
+                                <p class="text-large mb-2 text-white"><span class="notranslate" id="totalTxs">...</span>
+                                </p>
+                                <p class="text-muted text-small">Txs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section footer mb-0">
+                    <div class="container">
+                        <div class="row footer-row">
+                            <div class="col-12 text-right">
+                                <a class="btn btn-circle btn-outline-semi-light footer-circle-button scrollTo"
+                                  href="#home" id="footerCircleButton"><i class="simple-icon-arrow-up"></i></a>
+                            </div>
+                            <div class="col-12 text-center footer-content">
+                                <a href="#home" class="scrollTo">
+                                    <img class="footer-logo" alt="footer logo" src="img/Space-logo-Orange.svg" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row" id="footerMenuAccordion">
+                        </div>
+                    </div>
+                    <div class="separator mt-5"></div>
+                    <div class="container copyright pt-5 pb-5">
+                        <div class="row">
+                            <div class="col-12 mb-4">This application is beta software and is highly experimental.
+                                To the greatest extent possible the Space Bank protocol has been implemented to be
+                                accessible directly on-chain without a user interface. This website and associated
+                                APIs have been provided for convenience.<br><br>
+                                Ultimately you are interacting with no other party other than the blockchain itself
+                                and are 100% responsible for your transactions. Please do your own research before
+                                interacting with any contract or asset on the blockchain. The Space Bank Network is
+                                never liable for losses that happen using this user interface or the Space Bank protocol.
+                            </div>
+                            <div class="col-6">
+                                <p class="mb-0">2022 © Space Bank</p>
+                            </div>
+                            <div class="col-6 text-right social-icons">
+                                <p><a href="https://t.me/SpaceDaoDapp" class="footer-link"><img
+                                  class="footer-telegram" src="img/telegram-logo.svg" /> Join us on
+                                    Telegram</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="js/index855c.js?t=1620928202652"></script>
+    
+    <script src="js/flowv12.bundle855c.js?t=1620928202652"></script>
+    <script type="text/javascript"
+        src="../translate.google.com/translate_a/elementa0d8.js?cb=googleTranslateElementInit"></script>
+</body>
+
+
+</html>
