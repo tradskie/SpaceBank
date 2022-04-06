@@ -63,9 +63,10 @@
 .navbar a,
 .navbar a i,
 .navbar a:focus i {
-  font-size: 12px;
+  font-size: 15px;
   line-height: 0;
   margin-left: 5px;
+  font-weight: 800;
 }
 .navbar a:hover,
 .navbar .active,

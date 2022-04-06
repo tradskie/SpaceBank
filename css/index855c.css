@@ -1873,7 +1873,7 @@ p {
   font-size: 2.7rem !important; }
 
 .text-small {
-  font-size: 0.76rem !important;
+  font-size: 0.90rem !important;
   line-height: 0.9rem !important; }
 
 .text-white {
@@ -1970,14 +1970,14 @@ button {
   background-color: #f7941d;
   border-radius: 50px;
   outline: initial !important;
-  box-shadow: none !important;
   box-shadow: initial !important;
   border-style: solid;
   border-width: 2px;
   color: #090424;
-  font-size: 0.8rem;
+  font-size: 15px;
+  font-weight: 800;
   padding: 0.75rem 1.3rem 0.6rem 1.3rem;
-  transition: background-color box-shadow 0.1s linear; }
+}
 
   .connect-btn:hover {
     background: var(--token);
@@ -2644,12 +2644,13 @@ button {
 .nav-tabs .nav-item.show .nav-link {
   border: initial;
   position: relative;
-  color: #86367e; }
+  color: #000;
+  font-weight: 800; }
 
 .nav-tabs .nav-link:hover,
 .nav-tabs .nav-link:focus {
   border: initial;
-  color: #86367e; }
+  color: #000; }
 
 /* 08.Owl Carousel */
 .owl-stage {
@@ -3221,7 +3222,7 @@ main {
 
 /* 17.Cards*/
 .card {
-  background: #090424;
+  background: #090424cc;
   border-style: solid;
     border-width: 1px;
     border-radius: 14px;
@@ -5788,7 +5789,7 @@ a.ck.ck-button.ck-on:not(.ck-disabled):hover {
     max-width: 135%;
     margin-bottom: 3rem; }
   .landing-page .home-row {
-    padding-top: 180px;
+    padding-top: 200px;
     margin-bottom: 70px; }
     @media (max-width: 1439px) {
       .landing-page .home-row {
