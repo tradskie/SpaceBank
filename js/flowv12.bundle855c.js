@@ -7429,8 +7429,8 @@ function bindUI() {
     $('#max-recipients').select2(options)
     $('#heartbeat-interval').select2(options)
 
-    $('#contract-url').attr('href', `https://testnet.ftmscan.com//#/contract/${contractAddress}`)
-    $('#contract-url').text(`https://testnet.ftmscan.com//#/contract/${shortId(contractAddress, 5)}`)
+    $('#contract-url').attr('href', `https://testnet.bscscan.com/#/contract/${contractAddress}`)
+    $('#contract-url').text(`https://testnet.bscscan.com/#/contract/${shortId(contractAddress, 5)}`)
 
     $('#stakingChb').change(async (e) => {
         let isStaking = $(e.currentTarget).prop('checked')
@@ -8299,11 +8299,11 @@ function setNetwork() {
     if (url.indexOf('shasta') != -1) {
         network = 'Shasta'
         contractAddress = networks['shasta']
-        bscLinkUrlPrefix = 'https://testnet.ftmscan.com//#/transaction/'
+        bscLinkUrlPrefix = 'https://testnet.bscscan.com//#/transaction/'
     } else {
         network = 'Mainnet'
         contractAddress = networks['mainnet']
-        bscLinkUrlPrefix = 'https://testnet.ftmscan.com//#/transaction/'
+        bscLinkUrlPrefix = 'https://testnet.bscscan.com//#/transaction/'
     }
 
     console.log('network detected', network, contractAddress)
