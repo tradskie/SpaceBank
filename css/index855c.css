@@ -1976,16 +1976,15 @@ button {
   color: #090424;
   font-size: 15px;
   font-weight: 800;
-  padding: 0.75rem 1.3rem 0.6rem 1.3rem;
 }
 
   .connect-btn:hover {
     background: var(--token);
     color: #343a40;
+
   }
   @media (max-width: 992px) {
     .connect-btn {
-      padding: 7px 20px 8px 20px;
     }
   }
 
@@ -1997,7 +1996,6 @@ button {
     background-color: #090424c9!important;
     box-shadow: initial;
     font-size: 0.8rem;
-    padding: 0.75rem 1.3rem 0.6rem 1.3rem;
     transition: background-color box-shadow 0.1s linear; }
 
 .btn-shadow {
